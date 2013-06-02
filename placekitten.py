@@ -4,16 +4,14 @@ import os
 import ctypes
 
 width = random.randint(200,500)
-height = width-100
+height = width-random.randint(1,100)
 
-url = 'http://placekitten.com/' + str(width) + '/' + str(height)
+url = 'http://placekitten.com/{0}/{1}'.format(str(width),str(height))
 kitten = urlopen(url).read()
 
 os.chdir('C:/Users/Public')
-f = open('kitten.bmp' , 'wb')
-f.write(kitten)
+with open('kitten.bmp' , 'wb') as f: f.write(kitten)
 f.close()
 
-SPI_SETDESKWALLPAPER = 20 # According to http://support.microsoft.com/default.aspx?scid=97142
-
+SPI_SETDESKWALLPAPER = 20
 ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0, "kitten.bmp" , 0)
